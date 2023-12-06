@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import fotoImage from './imgs/foto.jpg';
+import fotoImage from './imgs/logo.png';
+// import fotoImage from './imgs/FLUIG-01.png';
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   const [nonValues, setNonValues] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedNonValues, setSelectedNonValues] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const valueList = [
     "Aprendizagem contínua",
@@ -93,10 +95,21 @@ const App = () => {
     try {
       const response = await axios.post('http://localhost:5000/authenticate', { cpf });
       const authenticatedUser = response.data;
+
+      if (authenticatedUser.error) {
+        // Exibe a mensagem de erro se o usuário não for encontrado
+        setErrorMessage('Usuário não encontrado. Verifique o CPF e tente novamente.');
+        return;
+      }
+
+      // Limpa a mensagem de erro se a autenticação for bem-sucedida
+      setErrorMessage('');
+
       setAuthenticatedUser(authenticatedUser);
       localStorage.setItem('authenticatedUser', JSON.stringify(authenticatedUser));
     } catch (error) {
       console.error('Erro ao autenticar usuário:', error);
+      setErrorMessage('Usuário não encontrado. Utilize seu CPF sem traços e pontos.');
     }
   };
 
@@ -190,7 +203,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header with-background">
         {authenticatedUser ? (
           <div>
             <h2>Bem-vindo(a), {authenticatedUser.RD0_NOME}!</h2>
@@ -213,7 +226,7 @@ const App = () => {
                           onClick={() => togglePhraseSelection(phrase, 'values')}
                           className={`phrase-item ${isSelected ? 'selected' : ''}`}
                           style={{
-                            backgroundColor: isSelected ? '#007bff' : isDisabled ? '#e0e0e0' : '#f2f2f2',
+                            backgroundColor: isSelected ? 'rgba(255, 2, 2, 0.562), 76, 76)' : isDisabled ? '#e0e0e0' : '#f2f2f2',
                             color: isSelected ? '#fff' : '',
                           }}
                         >
@@ -224,14 +237,14 @@ const App = () => {
                   </ul>
                 </div>
 
-                {/* <div className="panel">
+                <div className="panel">
                   <h3>Frases Selecionadas de Valores</h3>
                   <ul className="phrase-list">
                     {selectedValues.map((phrase, index) => (
                       <li key={index}>{phrase}</li>
                     ))}
                   </ul>
-                </div> */}
+                </div>
 
                 <div className="panel">
                   <h3>Frases de Não Valores</h3>
@@ -246,7 +259,7 @@ const App = () => {
                           onClick={() => togglePhraseSelection(phrase, 'nonValues')}
                           className={`phrase-item ${isSelected ? 'selected' : ''}`}
                           style={{
-                            backgroundColor: isSelected ? '#007bff' : isDisabled ? '#e0e0e0' : '#f2f2f2',
+                            backgroundColor: isSelected ? 'rgba(255, 2, 2, 0.562), 76, 76)' : isDisabled ? '#e0e0e0' : '#f2f2f2',
                             color: isSelected ? '#fff' : '',
                           }}
                         >
@@ -257,21 +270,21 @@ const App = () => {
                   </ul>
                 </div>
 
-                {/* <div className="panel">
+                <div className="panel">
                   <h3>Frases Selecionadas de Não Valores</h3>
                   <ul className="phrase-list">
                     {selectedNonValues.map((phrase, index) => (
                       <li key={index}>{phrase}</li>
                     ))}
                   </ul>
-                </div> */}
+                </div>
               </div>
               <div className="panel">
               <button
                   onClick={insertData}
                   className="insert-button"  /* Adiciona a classe do botão */
                 >
-                  Inserir no Banco de Dados
+                  Enviar e finalizar
                 </button>
                 </div>
 
@@ -289,25 +302,26 @@ const App = () => {
           </div>
         ) : (
           <div className="validation-screen">
-            <div className="validation-form">
-              <div className="logo-container">
+          <div className="validation-form">
+            <div className="logo-container">
               <img src={fotoImage} alt="Logo" className="logo" />
-
-
-              </div>
-              <h2>Tela de Autenticação</h2>
-              <label className="cpf-label">CPF:</label>
-                <input
-                  type="text"
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
-                  className="cpf-input"
-                />
-                <button onClick={authenticateUser} className="auth-button">
-                  Autenticar
-                </button>
-              </div>
+            </div>
+            <h2 className="auth-title">Pesquisa de Valores</h2>
+            <div className="input-container">
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+              <label className="cpf-label">Utilize seu <strong>CPF</strong> para entrar (Apenas numeros)</label>
+              <input
+                type="text"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                className="cpf-input"
+              />
+            </div>
+            <button onClick={authenticateUser} className="auth-button">
+                Autenticar
+              </button>
           </div>
+        </div>
         )}
       </header>
     </div>

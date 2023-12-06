@@ -27,7 +27,7 @@ const mysqlConfig = {
   host: '127.0.0.1',
   port: 3306,
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'minigame_db',
 };
 
@@ -50,7 +50,9 @@ app.post('/authenticate', async (req, res) => {
   
     try {
       await sql.connect(config);
-      const result = await sql.query`SELECT RD0_NOME, RD0_CIC, RD0_FILIAL FROM RD0010 WHERE RD0_CIC = ${cpf} AND D_E_L_E_T_ = ''`;
+      const result = await sql.query`SELECT RD0_NOME, RD0_CIC, RD0_FILIAL FROM RD0010
+      JOIN SRA010 ON RA_CIC = RD0_CIC AND SRA010.D_E_L_E_T_ = '' AND RA_DEMISSA = ''
+      WHERE RD0_CIC = ${cpf} AND RD0010.D_E_L_E_T_ = ''`;
   
       if (result.recordset.length > 0) {
         const authenticatedUser = result.recordset[0];

@@ -10,14 +10,21 @@ body {
 }
 
 .App-header {
-  background-color: #282c34;
+  
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(8px + 2vmin);
-  color: white;
+ 
+  color: rgb(0, 0, 0);
+}
+
+.App-header {
+  background-image: url('/src/imgs/fundo.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .container {
@@ -49,8 +56,9 @@ body {
 }
 
 .phrase-item.selected {
-  background-color: #4caf50;
+  background-color: rgb(175, 76, 76);
   color: white;
+  
 }
 
 .phrase-item.disabled {
@@ -63,8 +71,8 @@ body {
 }
 
 .panel h3 {
-  color: #007bff;
-  font-size: 0.8rem; /* Reduzi o tamanho da fonte */
+  color: #000307;
+  font-size: 1.8rem; /* Reduzi o tamanho da fonte */
   margin-bottom: 6px; /* Reduzi a margem inferior para diminuir o espaço entre o título e os itens */
 }
 
@@ -144,6 +152,10 @@ body {
   cursor: pointer;          /* Cursor de apontar ao passar o mouse */
 }
 
+.insert-button:hover{
+  background-color: #0b7a01;
+}
+
 /* Estilo para o modal de sucesso */
 .success-modal {
   display: none;
@@ -215,10 +227,16 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #282c34; /* Cor de fundo branca mais suave */
+  background-color: #282c3400;
+  
 }
 
-/* Estilo para o formulário de autenticação */
+.with-background {
+ 
+  background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o contêiner */
+  background-position: center; /* Centraliza a imagem no contêiner */
+}
+
 .validation-form {
   display: flex;
   flex-direction: column;
@@ -226,61 +244,73 @@ body {
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff; /* Cor de fundo branca */
-  max-width: 600px; /* Largura máxima do formulário */
-  width: 100%;
-  height: 500px;
-  color: #007bff;
+  background-color: #ffffff;
+  max-width: 700px; /* Reduzi a largura para um layout mais limpo */
+  color: #c40000;
 }
 
-/* Adicione um espaço para o logotipo */
 .logo-container {
   margin-bottom: 0px;
 }
 
-/* Adicione um estilo ao logotipo se necessário */
 .logo {
-  max-width: 40%;
+  max-width: 55%; /* Ajustei para ocupar a largura total do contêiner */
 }
 
-/* Estilo para o botão */
-.validation-button {
-  margin-top: 20px;
+.auth-title {
+  font-size: 29px;
+  margin-top:30px;
+  margin-bottom: 25px;
+  color: #8a0101;
+}
+
+.auth-form {
+  width: 100%; /* Ocupa 100% da largura disponível */
+}
+
+.auth-label {
+  margin-bottom: 10px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px; /* Aumentei a margem inferior para espaçamento */
+}
+
+.auth-button {
+  background-color: #0fb300;
+  color: #fff;
   padding: 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #007bff; /* Cor de fundo do botão */
-  color: #fff; /* Cor do texto do botão */
   font-size: 18px;
 }
 
-.validation-button:hover {
-  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+.auth-button:hover {
+  background-color: #0e9601;
 }
 
-
-
-.cpf-input {
-  width: 100%; /* Ocupa 100% da largura disponível */
-  padding: 10px; /* Adiciona algum preenchimento ao redor do texto dentro do input */
-  font-size: 16px; /* Tamanho da fonte desejado */
-  /* Outros estilos conforme necessário */
-
-}
-
-.cpf-label{
+.input-container {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
-.auth-button {
-  margin-top: 20px;
-  background-color: #007bff; /* Cor de fundo do botão */
-  color: #fff; /* Cor do texto do botão */
-  padding: 10px 20px; /* Preenchimento interno do botão */
-  font-size: 16px; /* Tamanho da fonte do botão */
-  border: none; /* Remove a borda padrão do botão */
-  cursor: pointer; /* Mostra uma mão ao pairar sobre o botão, indicando que é clicável */
-  /* Outros estilos conforme necessário */
-  border-radius: 10px;
+.cpf-input {
+  margin-top: 5px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: rgb(12, 12, 12)(95, 30, 30);
 }
+
+.cpf-input:focus {
+  border-color: #000000; /* Cor da borda ao focar no input */
+  outline: none;
+}
+
