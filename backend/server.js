@@ -2,10 +2,13 @@ const express = require('express');
 const sql = require('mssql');
 const cors = require('cors');
 const session = require('express-session');
+const mysql = require('mysql2/promise');  // Use a versão promise do mysql2 para trabalhar com async/await
+
 
 
 const app = express();
 const port = 5000; // ou o número de porta desejado
+const bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(express.json());
@@ -18,6 +21,16 @@ app.use(
     })
   );
 
+  app.use(bodyParser.json());
+
+const mysqlConfig = {
+  host: '127.0.0.1',
+  port: 3306,
+  user: 'root',
+  password: 'root',
+  database: 'minigame_db',
+};
+
 const config = {
     user: 'CLT144398fin.paper',
     password: 'qpoux47325UAQKV!@',
@@ -28,6 +41,9 @@ const config = {
         trustServerCertificate: true, // Adicione esta opção para aceitar certificados autoassinados
       },
 };
+
+const pool = mysql.createPool(mysqlConfig);
+
 
 app.post('/authenticate', async (req, res) => {
     const { cpf } = req.body;
@@ -63,6 +79,23 @@ app.post('/authenticate', async (req, res) => {
       res.status(200).json(user);
     } else {
       res.status(401).json({ error: 'Usuário não autenticado' });
+    }
+  });
+
+  app.post('/saveSelections', async (req, res) => {
+    try {
+      const { userId, selectedValues, selectedNonValues } = req.body;
+  
+      // Use o userId (nome do usuário) como identificador único
+      const result = await pool.query(
+        'INSERT INTO user_selections (user_id, selected_values, selected_non_values) VALUES (?, ?, ?)',
+        [userId, JSON.stringify(selectedValues), JSON.stringify(selectedNonValues)]
+      );
+  
+      res.json({ success: true, message: 'Seleções salvas com sucesso!' });
+    } catch (error) {
+      console.error('Erro ao salvar seleções:', error);
+      res.status(500).json({ success: false, message: 'Erro ao salvar seleções.' });
     }
   });
 

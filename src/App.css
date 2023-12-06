@@ -1,16 +1,12 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -20,19 +16,271 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(8px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.panel {
+  margin: 5px; /* Reduzi a margem para diminuir o tamanho do painel */
+  padding: 5px; /* Reduzi o preenchimento para diminuir o tamanho do painel */
+}
+
+.phrase-list {
+  columns: 5;
+  list-style-type: none;
+  padding: 0;
+}
+
+.phrase-item {
+  cursor: pointer;
+  margin-bottom: 4px; /* Reduzi a margem inferior para diminuir o espaço entre os itens */
+}
+
+.phrase-item.selected {
+  background-color: #4caf50;
+  color: white;
+}
+
+.phrase-item.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.selected {
+  background-color: #b3d4fc;
+}
+
+.panel h3 {
+  color: #007bff;
+  font-size: 0.8rem; /* Reduzi o tamanho da fonte */
+  margin-bottom: 6px; /* Reduzi a margem inferior para diminuir o espaço entre o título e os itens */
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px; /* Reduzi o preenchimento para diminuir o tamanho do botão */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.phrase-list {
+  list-style: none;
+  padding: 0;
+}
+
+.phrase-item {
+  background-color: #f2f2f2;
+  margin: 5px 0; /* Reduzi a margem para diminuir o espaço entre os itens */
+  padding: 6px; /* Reduzi o preenchimento para diminuir o tamanho do item */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 350px;
+}
+
+.phrase-item:hover {
+  background-color: #e0e0e0;
+}
+
+.phrase-item.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.phrase-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  background-color: #4caf50;
+}
+
+.selected-list {
+  margin-top: 10px; /* Reduzi a margem superior para diminuir o espaço entre os painéis */
+}
+
+.selected-list h3 {
+  color: #007bff;
+  font-size: 0.8rem; /* Reduzi o tamanho da fonte */
+  margin-bottom: 6px; /* Reduzi a margem inferior para diminuir o espaço entre o título e os itens */
+}
+
+.selected-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.selected-list li {
+  background-color: #007bff;
+  color: #fff;
+  padding: 6px; /* Reduzi o preenchimento para diminuir o tamanho do item */
+  margin: 3px 0; /* Reduzi a margem para diminuir o espaço entre os itens */
+  border-radius: 5px;
+}
+
+.insert-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50; /* Cor de fundo do botão */
+  color: white;             /* Cor do texto do botão */
+  border: none;             /* Remove a borda do botão */
+  border-radius: 5px;       /* Borda arredondada */
+  cursor: pointer;          /* Cursor de apontar ao passar o mouse */
+}
+
+/* Estilo para o modal de sucesso */
+.success-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Estilo para o fundo escuro do modal */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Adiciona uma animação simples de fade-in */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
+}
+
+/* Adiciona uma animação simples de fade-out */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Adiciona a animação de fade */
+.success-modal.show {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.overlay.show {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Adiciona a animação de fade-out ao fechar o modal */
+.success-modal.hide {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+.overlay.hide {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+.validation-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #282c34; /* Cor de fundo branca mais suave */
+}
+
+/* Estilo para o formulário de autenticação */
+.validation-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* Cor de fundo branca */
+  max-width: 600px; /* Largura máxima do formulário */
+  width: 100%;
+  height: 500px;
+  color: #007bff;
+}
+
+/* Adicione um espaço para o logotipo */
+.logo-container {
+  margin-bottom: 0px;
+}
+
+/* Adicione um estilo ao logotipo se necessário */
+.logo {
+  max-width: 40%;
+}
+
+/* Estilo para o botão */
+.validation-button {
+  margin-top: 20px;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  font-size: 18px;
+}
+
+.validation-button:hover {
+  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}
+
+
+
+.cpf-input {
+  width: 100%; /* Ocupa 100% da largura disponível */
+  padding: 10px; /* Adiciona algum preenchimento ao redor do texto dentro do input */
+  font-size: 16px; /* Tamanho da fonte desejado */
+  /* Outros estilos conforme necessário */
+
+}
+
+.cpf-label{
+  margin-bottom: 20px;
+}
+
+.auth-button {
+  margin-top: 20px;
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  padding: 10px 20px; /* Preenchimento interno do botão */
+  font-size: 16px; /* Tamanho da fonte do botão */
+  border: none; /* Remove a borda padrão do botão */
+  cursor: pointer; /* Mostra uma mão ao pairar sobre o botão, indicando que é clicável */
+  /* Outros estilos conforme necessário */
+  border-radius: 10px;
 }
