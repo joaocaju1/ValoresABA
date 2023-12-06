@@ -10,14 +10,12 @@ body {
 }
 
 .App-header {
-  
   background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
- 
   color: rgb(0, 0, 0);
 }
 
@@ -31,6 +29,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #8b8a8a2c;
+  border-radius: 10px;
 }
 
 .row {
@@ -45,7 +45,7 @@ body {
 }
 
 .phrase-list {
-  columns: 5;
+  columns: 3;
   list-style-type: none;
   padding: 0;
 }
@@ -53,6 +53,7 @@ body {
 .phrase-item {
   cursor: pointer;
   margin-bottom: 4px; /* Reduzi a margem inferior para diminuir o espaço entre os itens */
+
 }
 
 .phrase-item.selected {
@@ -69,12 +70,13 @@ body {
 .selected {
   background-color: #b3d4fc;
 }
-
 .panel h3 {
   color: #000307;
-  font-size: 1.8rem; /* Reduzi o tamanho da fonte */
+  font-size: 1.1rem; /* Reduzi o tamanho da fonte */
   margin-bottom: 6px; /* Reduzi a margem inferior para diminuir o espaço entre o título e os itens */
 }
+
+
 
 .button {
   background-color: #007bff;
@@ -314,3 +316,22 @@ body {
   outline: none;
 }
 
+.panels-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px; /* Ajuste conforme necessário */
+  margin: 0 auto;
+}
+
+.success-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #ffffff;  /* Cor de fundo do modal (verde) */
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  text-align: center;
+}

@@ -13,6 +13,7 @@ const App = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [selectedNonValues, setSelectedNonValues] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showInstructionsModal, setShowInstructionsModal] = useState(false);
 
   const valueList = [
     "Aprendizagem contínua",
@@ -89,6 +90,10 @@ const App = () => {
     fetchNonValues();
   }, []);
 
+ // Função para exibir o modal com as instruções
+  const showInstructions = () => {
+    setShowInstructionsModal(true);
+  };
 
   
   const authenticateUser = async () => {
@@ -107,11 +112,15 @@ const App = () => {
 
       setAuthenticatedUser(authenticatedUser);
       localStorage.setItem('authenticatedUser', JSON.stringify(authenticatedUser));
+
+      // Mostra o modal de instruções automaticamente após a autenticação
+      showInstructions();
     } catch (error) {
       console.error('Erro ao autenticar usuário:', error);
       setErrorMessage('Usuário não encontrado. Utilize seu CPF sem traços e pontos.');
     }
   };
+
 
   const logout = () => {
     setAuthenticatedUser(null);
@@ -162,12 +171,12 @@ const App = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const insertData = async () => {
-    try {
-      // Verifica se há frases selecionadas
-      if (selectedValues.length === 0 && selectedNonValues.length === 0) {
-        alert('Selecione pelo menos uma frase de valor ou não valor.');
-        return;
-      }
+  try {
+    // Verifica se há exatamente 6 frases de valor e 6 frases de não valor selecionadas
+    if (selectedValues.length !== 6 || selectedNonValues.length !== 6) {
+      alert('Por favor, escolha exatamente 6 frases de valor e 6 frases de não valor.');
+      return;
+    }
 
       // Envia os dados para o backend
       const response = await axios.post('http://localhost:5000/saveSelections', {
@@ -209,7 +218,6 @@ const App = () => {
             <h2>Bem-vindo(a), {authenticatedUser.RD0_NOME}!</h2>
             {/* <p>Filial: {authenticatedUser.RD0_FILIAL}</p> */}
             <p>CPF: {authenticatedUser.RD0_CIC}</p>
-          
 
             <div className="container">
               <div className="row">
@@ -236,7 +244,9 @@ const App = () => {
                     })}
                   </ul>
                 </div>
+              </div>
 
+              <div className="container">
                 <div className="panel">
                   <h3>Frases Selecionadas de Valores</h3>
                   <ul className="phrase-list">
@@ -245,7 +255,7 @@ const App = () => {
                     ))}
                   </ul>
                 </div>
-
+              
                 <div className="panel">
                   <h3>Frases de Não Valores</h3>
                   <ul className="phrase-list">
@@ -259,8 +269,7 @@ const App = () => {
                           onClick={() => togglePhraseSelection(phrase, 'nonValues')}
                           className={`phrase-item ${isSelected ? 'selected' : ''}`}
                           style={{
-                            backgroundColor: isSelected ? 'rgba(255, 2, 2, 0.562), 76, 76)' : isDisabled ? '#e0e0e0' : '#f2f2f2',
-                            color: isSelected ? '#fff' : '',
+                            backgroundColor: isSelected ? 'rgba(255, 2, 2, 0.562), 76, 76)' : isDisabled ? '#e0e0e0' : '#f2f2f2', color: isSelected ? '#fff' : '',
                           }}
                         >
                           {phrase}
@@ -298,6 +307,16 @@ const App = () => {
               className={`overlay ${showSuccessModal ? 'show' : 'hide'}`}
               onClick={() => setShowSuccessModal(false)}
             ></div> */}
+            </div>
+
+            <div className={`success-modal ${showInstructionsModal ? 'show' : 'hide'}`}>
+              <p>
+                <strong>"Os colaboradores deverão escolher 6 palavras (Valores) que MELHOR refletem o dia a dia
+                no seu ambiente ou local de trabalho e 6 palavras (Valores) que NÃO refletem no seu dia a dia."</strong>
+              </p>
+              <button onClick={() => setShowInstructionsModal(false)} className="insert-button">
+                Fechar
+              </button>
             </div>
           </div>
         ) : (
