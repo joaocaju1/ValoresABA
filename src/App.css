@@ -40,20 +40,31 @@ body {
 }
 
 .panel {
-  margin: 5px; /* Reduzi a margem para diminuir o tamanho do painel */
-  padding: 5px; /* Reduzi o preenchimento para diminuir o tamanho do painel */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
 }
 
 .phrase-list {
-  columns: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   list-style-type: none;
   padding: 0;
+}
+
+.resultado{
+  list-style-type: none;
+  display: flex;
+  gap: 20px
 }
 
 .phrase-item {
   cursor: pointer;
   margin-bottom: 4px; /* Reduzi a margem inferior para diminuir o espaço entre os itens */
-
+  margin: 20px;
 }
 
 .phrase-item.selected {
@@ -64,7 +75,7 @@ body {
 
 .phrase-item.disabled {
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .selected {
@@ -136,6 +147,7 @@ body {
   padding: 0;
 }
 
+
 .selected-list li {
   background-color: #007bff;
   color: #fff;
@@ -145,7 +157,9 @@ body {
 }
 
 .insert-button {
-  padding: 10px 20px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 20px 50px;
   font-size: 16px;
   background-color: #4CAF50; /* Cor de fundo do botão */
   color: white;             /* Cor do texto do botão */
@@ -334,4 +348,33 @@ body {
   color: rgb(0, 0, 0);
   border-radius: 5px;
   text-align: center;
+}
+
+.animated-arrow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px; /* Ajuste conforme necessário */
+}
+
+.animated-arrow {
+  max-width: 20%; /* Ajuste conforme necessário */
+}
+
+
+.scroll-to-bottom-button {
+  background-color: #ff1e1e; /* Cor de fundo */
+  color: white; /* Cor do texto */
+  border: none; /* Remove a borda */
+  padding: 10px 20px; /* Espaçamento interno */
+  font-size: 16px; /* Tamanho da fonte */
+  cursor: pointer; /* Altera o cursor ao passar o mouse */
+  border-radius: 5px; /* Borda arredondada */
+  margin-top: 20px; /* Espaçamento superior */
+  width: 100%;
+}
+
+/* Adicione um efeito de transição suave para uma aparência mais agradável */
+.scroll-to-bottom-button:hover {
+  background-color: #bd0202; /* Altera a cor de fundo ao passar o mouse */
 }
